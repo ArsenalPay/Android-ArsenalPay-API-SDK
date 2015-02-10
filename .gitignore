@@ -25,3 +25,9 @@ tags
 build/
 .idea/
 target/
+
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+
