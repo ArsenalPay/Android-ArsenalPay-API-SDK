@@ -1,27 +1,30 @@
-Java ArsenalPay API SDK
+Java(Android) ArsenalPay API SDK
 =========
 
-<p><a href="http://www.arsenalmedia.ru/index.php/en">Arsenal Media LLC</a></p>
-<p><a href="https://arsenalpay.ru">ArsenalPay processing server</a></p>
+[Arsenal Media LLC](http://www.arsenalmedia.ru/index.php/en)
+[ArsenalPay processing server](https://arsenalpay.ru)
 
 
-<p>Android(Java) ArsenalPay API SDK is software development kit for 
-fast simple and seamless integration your (android)java application with processing server of ArsenalPay.</p>
-
-Version
-----
-
-1.0
-
-JDK version requirements
-----
-
-min 1.6
+Java(Android) ArsenalPay API SDK is software development kit for 
+fast simple and seamless integration your Java(Android) application with processing server of ArsenalPay.
 
 Source
 ----
 
-<a href="https://arsenalpay.ru/site/integration">Official integration guide page</a>
+[Official integration guide page](https://arsenalpay.ru/site/integration)
+
+Dependencies
+----
+
+[Simple XML framework](http://simple.sourceforge.net)
+[Apache Commons Lang](http://commons.apache.org/proper/commons-lang/)
+[JUnit](http://junit.org/)
+[Mockito](http://mockito.org/)
+
+Usage
+----
+
+<p>Clone repo and import module in your Gradle-based project to start using ArsenalPay-API :+1:</p>
 
 Functions of API
 ----
@@ -45,26 +48,11 @@ PaymentRequest paymentRequest = new PaymentRequest.MobileBuilder()
         .build();
 
 PaymentResponse paymentResponse = new sendRequestPayment().execute(paymentRequest).get(30, TimeUnit.SECONDS);
-                    transactionID = paymentResponse.getTransactionId();
-```        
-
-<p>See more details in JavaDoc.</p>
-
-<b>CheckPaymentStatus method. Example code:</b>
-
-```java  
-
-    PaymentStatusResponse paymentStatusResponse = new checkStatusPayment().execute(new PaymentStatusRequest(transactionID)).get(30, TimeUnit.SECONDS);
-
-```
-
-<p>See more details in JavaDoc.</p>
-
-<b>AsyncTask examples. Example code:</b>
-
-```java
-
-	private class sendRequestPayment extends AsyncTask<PaymentRequest, Void, PaymentResponse> {
+transactionID = paymentResponse.getTransactionId();
+.
+.
+.
+private class sendRequestPayment extends AsyncTask<PaymentRequest, Void, PaymentResponse> {
 
         @Override
         protected PaymentResponse doInBackground(PaymentRequest... params) {
@@ -77,8 +65,19 @@ PaymentResponse paymentResponse = new sendRequestPayment().execute(paymentReques
             return paymentResponse;
         }
     }
-	
-	private class checkStatusPayment extends AsyncTask<PaymentStatusRequest, Void, PaymentStatusResponse> {
+```        
+
+<p>See more details in JavaDoc.</p>
+
+<b>CheckPaymentStatus method. Example code:</b>
+
+```java  
+
+    PaymentStatusResponse paymentStatusResponse = new checkStatusPayment().execute(new PaymentStatusRequest(transactionID)).get(30, TimeUnit.SECONDS);
+.
+.
+.
+private class checkStatusPayment extends AsyncTask<PaymentStatusRequest, Void, PaymentStatusResponse> {
 
         @Override
         protected PaymentStatusResponse doInBackground(PaymentStatusRequest... params) {
@@ -90,6 +89,7 @@ PaymentResponse paymentResponse = new sendRequestPayment().execute(paymentReques
             }
             return paymentStatusResponse;
         }
-    }
+    }	
 ```
 
+<p>See more details in JavaDoc.</p>
