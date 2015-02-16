@@ -69,7 +69,7 @@ public final class PaymentStatusResponse extends AbstractResponse {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(SERVER_API_DATE_FORMAT);
             return simpleDateFormat.parse(datetime);
         } catch (ParseException e) {
-            log.log(Level.SEVERE, "PaymentStatusResponse:getDate");
+            log.log(Level.SEVERE, "ArsenalpayAPI-SDK PaymentStatusResponse:getDate");
             throw new ArsenalPayApiRuntimeException(e);
         }
     }
@@ -89,7 +89,7 @@ public final class PaymentStatusResponse extends AbstractResponse {
         final OperationStatus operationStatus = holder.get(message);
         if (operationStatus == null) {
             final String text = String.format("Unrecognized server API status: [%s]", message);
-            log.log(Level.SEVERE, "PaymentStatusResponse:getDate:"+text);
+            log.log(Level.SEVERE, "ArsenalpayAPI-SDK PaymentStatusResponse:getDate:"+text);
             throw new ArsenalPayApiRuntimeException(text);
         }
         return operationStatus;
@@ -117,7 +117,7 @@ public final class PaymentStatusResponse extends AbstractResponse {
             Persister persister = new Persister();
             return persister.read(PaymentStatusResponse.class, xml);
         } catch (Exception e) {
-            log.log(Level.SEVERE, "PaymentStatusResponse:read");
+            log.log(Level.SEVERE, "ArsenalpayAPI-SDK PaymentStatusResponse:read");
             throw new InternalApiException(e);
         }
     }

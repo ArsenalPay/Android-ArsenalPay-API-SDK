@@ -2,13 +2,10 @@ package ru.arsenalpay.api.unit;
 
 import org.junit.Test;
 
-import java.util.logging.Logger;
-
 import static org.junit.Assert.assertEquals;
 import static ru.arsenalpay.api.util.SecurityUtils.getSignature;
 
 public class SecurityUtilsTest {
-    private static Logger log = Logger.getLogger(SecurityUtilsTest.class.getName());
 
     @Test
     public void testSignatureInitPayMk() throws Exception {

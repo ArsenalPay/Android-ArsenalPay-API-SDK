@@ -31,7 +31,7 @@ public class HttpUrlConnectionImpl implements ApiClient {
     @Override
     public ApiResponse executeCommand(ApiCommand command) throws IOException, InternalApiException {
 
-        log.log(Level.INFO, "HTTPURLCONNECTION JAVA.UTIL.LOGGING");
+        log.log(Level.INFO, "ArsenalpayAPI-SDK HttpUrlConnectionImpl JAVA.UTIL.LOGGING");
 
             if (command.getHttpMethod() == HttpMethod.GET)
                 return executeGet(command);
@@ -39,7 +39,7 @@ public class HttpUrlConnectionImpl implements ApiClient {
                 return executePost(command);
             else{
                 String message = String.format("Http method is not supported: [%s]", command.getHttpMethod());
-                log.log(Level.SEVERE, message);
+                log.log(Level.INFO, "ArsenalpayAPI-SDK "+message);
             }
             return ApiResponseImpl.createEmpty();
         }
@@ -51,7 +51,7 @@ public class HttpUrlConnectionImpl implements ApiClient {
             try {
                 url = new URL(command.getFullUri());
             } catch (Exception e) {
-                log.log(Level.SEVERE, "HttpUrlConnectionImpl:HttpUrlTask:doGet");
+                log.log(Level.SEVERE, "ArsenalpayAPI-SDK HttpUrlConnectionImpl:doGet",e);
             }
 
             try {
@@ -63,7 +63,7 @@ public class HttpUrlConnectionImpl implements ApiClient {
                 return getResponse(connection);
 
             } catch (Exception e) {
-                log.log(Level.SEVERE, "HttpUrlConnectionImpl:HttpUrlTask:doGet");
+                log.log(Level.SEVERE, "ArsenalpayAPI-SDK HttpUrlConnectionImpl:doGet",e);
             } finally {
                 connection.disconnect();
             }
@@ -84,37 +84,34 @@ public class HttpUrlConnectionImpl implements ApiClient {
                 url = new URL(command.getBaseUri());
                 str = RequestUtils.mapToQueryString(command.getParams());
                 size = String.valueOf(str.length());
-                log.log(Level.SEVERE, "HttpUrlConnectionImpl URL:::"+url.toString());
-                log.log(Level.SEVERE, "HttpUrlConnectionImpl Post Data: "+str);
+                log.log(Level.INFO, "ArsenalpayAPI-SDK HttpUrlConnectionImpl URL:"+url.toString());
+                log.log(Level.INFO, "ArsenalpayAPI-SDK HttpUrlConnectionImpl Post Data: "+str);
             } catch (Exception e) {
-                log.log(Level.SEVERE, "HttpUrlConnectionImpl:HttpUrlTask:doPost1111");
+                log.log(Level.SEVERE, "ArsenalpayAPI-SDK HttpUrlConnectionImpl:doPost",e);
             }
 
             //Задаем параметры соединения
             try{
                 connection = (HttpURLConnection) url.openConnection();
-                log.log(Level.SEVERE, "HttpUrlConnectionImpl " + connection==null?"connection==null":"connection!=null");
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
                 connection.setRequestProperty("Content-Length", size);
-                connection.connect();
 
             //Посылаем параметры запроса на сервер
                 output = connection.getOutputStream();
-                log.log(Level.SEVERE, "HttpUrlConnectionImpl" + output==null?"output==null":"output!=null");
                 pw = new PrintWriter(output);
                 pw.write(str);
                 pw.flush();
             }catch(Exception e){
-                log.log(Level.SEVERE,"HttpUrlConnectionImpl" + "HttpUrlConnectionImpl:HttpUrlTask:doPost22222");
+                log.log(Level.SEVERE, "ArsenalpayAPI-SDK HttpUrlConnectionImpl:doPost",e);
             }
             finally {
                 if(pw!=null){
                     try{
                         pw.close();
                     }catch(Exception e){
-                        log.log(Level.SEVERE, "HttpUrlConnectionImpl:HttpUrlTask:doPost33333");
+                        log.log(Level.SEVERE, "ArsenalpayAPI-SDK HttpUrlConnectionImpl:doPost",e);
                         }
                 }
             }
@@ -123,7 +120,7 @@ public class HttpUrlConnectionImpl implements ApiClient {
             try {
                 return getResponse(connection);
             } catch (Exception e) {
-                log.log(Level.SEVERE, "HttpUrlConnectionImpl:HttpUrlTask:doPost44444");
+                log.log(Level.SEVERE, "ArsenalpayAPI-SDK HttpUrlConnectionImpl:doPost",e);
             } finally {
                 connection.disconnect();
             }
@@ -140,10 +137,10 @@ public class HttpUrlConnectionImpl implements ApiClient {
         //Читаем данные
         String data = readData(in);
         if (!data.isEmpty()) {
-            log.log(Level.SEVERE, "Response data: "+data);
+            log.log(Level.INFO, "ArsenalpayAPI-SDK HttpUrlConnectionImpl Response data: "+data);
             return new ApiResponseImpl(http_status, data);
         }
-        log.log(Level.SEVERE, "Response data is empty");
+        log.log(Level.INFO, "ArsenalpayAPI-SDK Response data is empty");
         return ApiResponseImpl.createEmpty();
 
     }
@@ -161,14 +158,14 @@ public class HttpUrlConnectionImpl implements ApiClient {
             if(!response.toString().isEmpty())
                 return response.toString();
         } catch (IOException e) {
-            log.log(Level.SEVERE, "HttpUrlConnectionImpl:HttpUrlTask:readData");
+            log.log(Level.SEVERE, "ArsenalpayAPI-SDK HttpUrlConnectionImpl:readData",e);
         }
         finally {
             if (reader != null) {
                 try {
                     reader.close();
                 } catch (IOException e) {
-                    log.log(Level.SEVERE, "HttpUrlConnectionImpl:HttpUrlTask:readData");
+                    log.log(Level.SEVERE, "ArsenalpayAPI-SDK HttpUrlConnectionImpl:readData",e);
                 }
             }
         }

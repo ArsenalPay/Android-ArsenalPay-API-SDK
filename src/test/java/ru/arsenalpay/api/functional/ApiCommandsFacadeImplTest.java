@@ -1,6 +1,5 @@
 package ru.arsenalpay.api.functional;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -22,17 +21,18 @@ import ru.arsenalpay.api.response.PaymentStatusResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Date;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.when;
 
 /**
  * Created by Ярослав on 13.02.2015.
  */
-public class ApiCommandsFacadeImpl2Test {
+public class ApiCommandsFacadeImplTest {
 
     String apiResponseBody;
     int status_code;
@@ -53,7 +53,7 @@ public class ApiCommandsFacadeImpl2Test {
     public void testSuccessProcessPayment() throws Exception {
         System.out.println("ApiCommandsFacadeImplTest ---> testSuccessProcessPayment");
 
-        apiResponseBody = FileUtils.readFileToString(new File("src/test/java/ru/arsenalpay/api/unit/support/api_ok_response.xml"));
+        apiResponseBody = new String(Files.readAllBytes(Paths.get("src/test/java/ru/arsenalpay/api/unit/support/api_ok_response.xml")));
 
         when(apiResponseMock.getBody()).thenReturn(apiResponseBody);
         when(httpUrlConnectionMock.executeCommand(any(ApiCommand.class))).thenReturn(apiResponseMock);
@@ -85,7 +85,7 @@ public class ApiCommandsFacadeImpl2Test {
     public void testErrorProcessPayment() throws Exception {
         System.out.println("ApiCommandsFacadeImplTest ---> testErrorProcessPayment");
 
-        apiResponseBody = FileUtils.readFileToString(new File("src/test/java/ru/arsenalpay/api/unit/support/api_error_unrecognized_status_response.xml"));
+        apiResponseBody = new String(Files.readAllBytes(Paths.get("src/test/java/ru/arsenalpay/api/unit/support/api_error_unrecognized_status_response.xml")));
 
         when(apiResponseMock.getBody()).thenReturn(apiResponseBody);
         when(httpUrlConnectionMock.executeCommand(any(ApiCommand.class))).thenReturn(apiResponseMock);
@@ -109,7 +109,8 @@ public class ApiCommandsFacadeImpl2Test {
     public void testSuccessCheckPaymentStatus() throws Exception {
         System.out.println("ApiCommandsFacadeImplTest ---> testSuccessCheckPaymentStatus");
 
-        apiResponseBody = FileUtils.readFileToString(new File("src/test/java/ru/arsenalpay/api/unit/support/api_ok_pay_check_payment_status_response.xml"));
+        apiResponseBody = new String(Files.readAllBytes(Paths.get("src/test/java/ru/arsenalpay/api/unit/support/api_ok_pay_check_payment_status_response.xml")));
+
         when(apiResponseMock.getBody()).thenReturn(apiResponseBody);
         when(httpUrlConnectionMock.executeCommand(any(ApiCommand.class))).thenReturn(apiResponseMock);
 
@@ -132,7 +133,8 @@ public class ApiCommandsFacadeImpl2Test {
     public void testInProgressCheckPaymentStatus() throws Exception {
         System.out.println("ApiCommandsFacadeImplTest ---> testInProgressCheckPaymentStatus");
 
-        apiResponseBody = FileUtils.readFileToString(new File("src/test/java/ru/arsenalpay/api/unit/support/api_in_progress_check_payment_status_response.xml"));
+        apiResponseBody = new String(Files.readAllBytes(Paths.get("src/test/java/ru/arsenalpay/api/unit/support/api_in_progress_check_payment_status_response.xml")));
+
         when(apiResponseMock.getBody()).thenReturn(apiResponseBody);
         when(httpUrlConnectionMock.executeCommand(any(ApiCommand.class))).thenReturn(apiResponseMock);
 
@@ -155,7 +157,8 @@ public class ApiCommandsFacadeImpl2Test {
     public void testNotRegisteredCheckPaymentStatus() throws Exception {
         System.out.println("ApiCommandsFacadeImplTest ---> testNotRegisteredCheckPaymentStatus");
 
-        apiResponseBody = FileUtils.readFileToString(new File("src/test/java/ru/arsenalpay/api/unit/support/api_not_registered_check_payment_status_response.xml"));
+        apiResponseBody = new String(Files.readAllBytes(Paths.get("src/test/java/ru/arsenalpay/api/unit/support/api_not_registered_check_payment_status_response.xml")));
+
         when(apiResponseMock.getBody()).thenReturn(apiResponseBody);
         when(httpUrlConnectionMock.executeCommand(any(ApiCommand.class))).thenReturn(apiResponseMock);
 
@@ -178,7 +181,8 @@ public class ApiCommandsFacadeImpl2Test {
     public void testRefusedCheckPaymentStatus() throws Exception {
         System.out.println("ApiCommandsFacadeImplTest ---> testRefusedCheckPaymentStatus");
 
-        apiResponseBody = FileUtils.readFileToString(new File("src/test/java/ru/arsenalpay/api/unit/support/api_refused_check_payment_status_response.xml "));
+        apiResponseBody = new String(Files.readAllBytes(Paths.get("src/test/java/ru/arsenalpay/api/unit/support/api_refused_check_payment_status_response.xml")));
+
         when(apiResponseMock.getBody()).thenReturn(apiResponseBody);
         when(httpUrlConnectionMock.executeCommand(any(ApiCommand.class))).thenReturn(apiResponseMock);
 
@@ -201,7 +205,8 @@ public class ApiCommandsFacadeImpl2Test {
     public void testInProgress2CheckPaymentStatus() throws Exception {
         System.out.println("ApiCommandsFacadeImplTest ---> testInProgress2CheckPaymentStatus");
 
-        apiResponseBody = FileUtils.readFileToString(new File("src/test/java/ru/arsenalpay/api/unit/support/api_ok_init_check_payment_status.xml"));
+        apiResponseBody = new String(Files.readAllBytes(Paths.get("src/test/java/ru/arsenalpay/api/unit/support/api_ok_init_check_payment_status.xml")));
+
         when(apiResponseMock.getBody()).thenReturn(apiResponseBody);
         when(httpUrlConnectionMock.executeCommand(any(ApiCommand.class))).thenReturn(apiResponseMock);
 
@@ -224,7 +229,8 @@ public class ApiCommandsFacadeImpl2Test {
     public void testEmptyTagPaymentStatus() throws Exception {
         System.out.println("ApiCommandsFacadeImplTest ---> testEmptyTagPaymentStatus");
 
-        apiResponseBody = FileUtils.readFileToString(new File("src/test/java/ru/arsenalpay/api/unit/support/api_empty_field_payment_status_response.xml"));
+        apiResponseBody = new String(Files.readAllBytes(Paths.get("src/test/java/ru/arsenalpay/api/unit/support/api_empty_field_payment_status_response.xml")));
+
         when(apiResponseMock.getBody()).thenReturn(apiResponseBody);
         when(httpUrlConnectionMock.executeCommand(any(ApiCommand.class))).thenReturn(apiResponseMock);
 

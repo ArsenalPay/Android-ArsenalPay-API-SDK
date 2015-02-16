@@ -80,7 +80,6 @@ public class ApiCommandsFacadeImpl implements ApiCommandsFacade {
         this.apiClient = new HttpUrlConnectionImpl();
         this.credentials = merchantCredentials;
 
-        //LoggerManager.init();
     }
 
     /**
@@ -93,7 +92,6 @@ public class ApiCommandsFacadeImpl implements ApiCommandsFacade {
     public ApiCommandsFacadeImpl(ApiClient apiClient, MerchantCredentials merchantCredentials) {
         this.apiClient = apiClient;
         this.credentials = merchantCredentials;
-        //LoggerManager.init();
     }
 
     @Override
@@ -105,7 +103,7 @@ public class ApiCommandsFacadeImpl implements ApiCommandsFacade {
             final String xml = apiResponse.getBody();
             return PaymentResponse.fromXml(xml);
         } catch (IOException e) {
-            log.log(Level.SEVERE, "ApiCommandsFacadeImpl:requestPayment");
+            log.log(Level.SEVERE, "ArsenalpayAPI-SDK ApiCommandsFacadeImpl:requestPayment",e);
             throw new InternalApiException(e);
         }
     }
@@ -119,7 +117,7 @@ public class ApiCommandsFacadeImpl implements ApiCommandsFacade {
             final String xml = apiResponse.getBody();
             return PaymentStatusResponse.fromXml(xml);
         } catch (IOException e) {
-            log.log(Level.SEVERE, "ApiCommandsFacadeImpl:checkPaymentStatus");
+            log.log(Level.SEVERE, "ArsenalpayAPI-SDK ApiCommandsFacadeImpl:checkPaymentStatus",e);
             throw new InternalApiException(e);
         }
     }

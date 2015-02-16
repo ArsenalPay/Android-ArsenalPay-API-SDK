@@ -1,6 +1,5 @@
 package ru.arsenalpay.api.unit;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -10,12 +9,13 @@ import ru.arsenalpay.api.client.impl.HttpUrlConnectionImpl;
 import ru.arsenalpay.api.command.ApiCommand;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.any;
 import static ru.arsenalpay.api.enums.HttpMethod.GET;
 import static org.mockito.Mockito.when;
 import static ru.arsenalpay.api.enums.HttpMethod.POST;
@@ -45,10 +45,7 @@ public class HttpUrlConnectionImplTest {
 
         MockitoAnnotations.initMocks(this);
 
-        /*apiResponseBody = "<?xml version=\"1.0\" encoding=\"utf-8\"?><main><rrn>1746219</rrn>" +
-                "<account>123456789</account><phone>9140001111</phone>" +
-                "<amount>125.0</amount><status>OK</status></main>";*/
-        apiResponseBody = FileUtils.readFileToString(new File("src/test/java/ru/arsenalpay/api/unit/support/api_ok_response.xml"));
+        apiResponseBody = new String(Files.readAllBytes(Paths.get("src/test/java/ru/arsenalpay/api/unit/support/api_ok_response.xml")));
 
         params = new HashMap<String, String>() {{
             put("SIGN", "726142fc2d784895406b8a7b1ba8eaad");
@@ -70,6 +67,7 @@ public class HttpUrlConnectionImplTest {
     @Test
     public void testExecuteGet() throws Exception {
         System.out.println("HttpUrlConnectionImplTest ---> testExecuteGet");
+        when(apiCommandMock.getHttpMethod()).thenReturn(GET);
 
         ApiResponse apiResponse = httpUrlConnectionMock.executeCommand(apiCommandMock);
 
@@ -82,6 +80,7 @@ public class HttpUrlConnectionImplTest {
     @Test
     public void testExecutePost() throws Exception {
         System.out.println("HttpUrlConnectionImplTest ---> testExecutePost");
+        when(apiCommandMock.getHttpMethod()).thenReturn(POST);
 
         ApiResponse apiResponse = httpUrlConnectionMock.executeCommand(apiCommandMock);
 

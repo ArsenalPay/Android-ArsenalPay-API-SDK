@@ -63,7 +63,7 @@ public final class PaymentResponse extends AbstractResponse {
         PaymentResponse paymentResponse = read(xml);
         String status = paymentResponse.getMessage();
         if (! "OK".equalsIgnoreCase(status)) {
-            log.log(Level.INFO, "PaymentResponse : fromXml : status!=OK");
+            log.log(Level.INFO, "ArsenalpayAPI-SDK PaymentResponse : fromXml : status!=OK");
             throw translateToException(status);
         }
         return paymentResponse;
@@ -81,7 +81,7 @@ public final class PaymentResponse extends AbstractResponse {
             Persister persister = new Persister();
             return persister.read(PaymentResponse.class, xml);
         } catch (Exception e) {
-            log.log(Level.SEVERE, "PaymentResponse:read");
+            log.log(Level.SEVERE, "ArsenalpayAPI-SDK PaymentResponse:read");
             throw new InternalApiException(e);
         }
     }
@@ -107,7 +107,7 @@ public final class PaymentResponse extends AbstractResponse {
         final ArsenalPayApiException exception = holder.get(status);
         if (exception == null) {
             final String comment = String.format("Unrecognized api server status [%s].", status);
-            log.log(Level.SEVERE, "PaymentResponse:translateToException");
+            log.log(Level.SEVERE, "ArsenalpayAPI-SDK PaymentResponse:translateToException");
             return new InternalApiException(comment);
         }
         return exception;

@@ -1,23 +1,23 @@
 package ru.arsenalpay.api.unit;
 
 
-import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 import ru.arsenalpay.api.exception.ArsenalPayApiException;
 import ru.arsenalpay.api.exception.InternalApiException;
 import ru.arsenalpay.api.exception.PaymentException;
 import ru.arsenalpay.api.response.PaymentResponse;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import static org.junit.Assert.*;
 
 public class PaymentResponseProducingTest {
 
     private PaymentResponse deserializeFromXml(String xml) throws IOException, ArsenalPayApiException {
-        final File file = new File(xml);
-        final String apiResponseXml = FileUtils.readFileToString(file);
+        final String apiResponseXml = new String(Files.readAllBytes(Paths.get(xml)));
+
         return PaymentResponse.fromXml(apiResponseXml);
     }
 
