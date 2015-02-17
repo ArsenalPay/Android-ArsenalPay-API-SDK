@@ -13,6 +13,11 @@ Source
 
 [Official integration guide page](https://arsenalpay.ru/site/integration)
 
+JDK Version Requirements
+----
+
+1.7
+
 Dependencies
 ----
 

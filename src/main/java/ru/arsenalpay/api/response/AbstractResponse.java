@@ -19,7 +19,7 @@ public abstract class AbstractResponse {
      * RRN -- Acquirer Retrieval Reference Number
      * Required field
      */
-    @Element(name = "rrn")
+    @Element(name = "rrn", required = false)
     protected final Long transactionId;
 
     /**

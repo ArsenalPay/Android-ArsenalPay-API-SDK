@@ -87,13 +87,13 @@ public class PaymentResponseProducingTest {
     }
 
     @Test(expected = PaymentException.class)
-    public void testErrorPhoneStatus() throws Exception {
-        deserializeFromXml("src/test/java/ru/arsenalpay/api/unit/support/api_error_phone_response.xml");
+    public void testErrorSignatureStatus() throws Exception {
+       deserializeFromXml("src/test/java/ru/arsenalpay/api/unit/support/api_error_signature_response.xml");
     }
 
     @Test(expected = PaymentException.class)
-    public void testErrorSignatureStatus() throws Exception {
-        deserializeFromXml("src/test/java/ru/arsenalpay/api/unit/support/api_error_signature_response.xml");
+    public void testErrorPhoneStatus() throws Exception {
+            deserializeFromXml("src/test/java/ru/arsenalpay/api/unit/support/api_error_phone_response.xml");
     }
 
 }

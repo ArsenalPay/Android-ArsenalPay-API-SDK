@@ -1,5 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <main>
-    <rrn>567456755678</rrn>
-    <stan>123456</stan>
-    <status>ERR_SID</status>
+<status>ERR_SIGN</status>
 </main>

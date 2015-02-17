@@ -63,7 +63,7 @@ public final class PaymentResponse extends AbstractResponse {
         PaymentResponse paymentResponse = read(xml);
         String status = paymentResponse.getMessage();
         if (! "OK".equalsIgnoreCase(status)) {
-            log.log(Level.INFO, "ArsenalpayAPI-SDK PaymentResponse : fromXml : status!=OK");
+            log.info( "ArsenalpayAPI-SDK PaymentResponse : fromXml : status!=OK");
             throw translateToException(status);
         }
         return paymentResponse;
@@ -81,7 +81,7 @@ public final class PaymentResponse extends AbstractResponse {
             Persister persister = new Persister();
             return persister.read(PaymentResponse.class, xml);
         } catch (Exception e) {
-            log.log(Level.SEVERE, "ArsenalpayAPI-SDK PaymentResponse:read");
+            log.severe("ArsenalpayAPI-SDK PaymentResponse:read");
             throw new InternalApiException(e);
         }
     }
@@ -96,7 +96,7 @@ public final class PaymentResponse extends AbstractResponse {
             put(null,             new InternalApiException("Api server status is null."));
             put("",               new InternalApiException("Api server status is empty."));
             put("ERR_AMOUNT",     new PaymentException("Invalid amount value."));
-            put("ERR_SID",        new PaymentException("Invalid sid(session id) value."));
+            put("ERR_SIGN",        new PaymentException("Invalid sign(hashcode)."));
             put("ERR_PHONE",      new PaymentException("Invalid payerId or value doesn't exist."));
             put("ERR_CURRENCY",   new PaymentException("Invalid currency value or service doesn't support it."));
             put("ERR_DATEFORMAT", new PaymentException("Invalid date format."));
