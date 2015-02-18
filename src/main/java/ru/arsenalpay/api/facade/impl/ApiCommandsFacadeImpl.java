@@ -15,10 +15,8 @@ import ru.arsenalpay.api.request.PaymentRequest;
 import ru.arsenalpay.api.request.PaymentStatusRequest;
 import ru.arsenalpay.api.response.PaymentResponse;
 import ru.arsenalpay.api.response.PaymentStatusResponse;
-import ru.arsenalpay.api.util.Configuration;
 
 import java.io.IOException;
-import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

@@ -7,10 +7,8 @@ import org.mockito.MockitoAnnotations;
 import ru.arsenalpay.api.client.ApiResponse;
 import ru.arsenalpay.api.client.impl.HttpUrlConnectionImpl;
 import ru.arsenalpay.api.command.ApiCommand;
+import ru.arsenalpay.api.util.ArsenalpayUtils;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,7 +43,7 @@ public class HttpUrlConnectionImplTest {
 
         MockitoAnnotations.initMocks(this);
 
-        apiResponseBody = new String(Files.readAllBytes(Paths.get("src/test/java/ru/arsenalpay/api/unit/support/api_ok_response.xml")));
+        apiResponseBody = ArsenalpayUtils.getStringFromFile("src/test/java/ru/arsenalpay/api/unit/support/api_ok_response.xml");
 
         params = new HashMap<String, String>() {{
             put("SIGN", "726142fc2d784895406b8a7b1ba8eaad");

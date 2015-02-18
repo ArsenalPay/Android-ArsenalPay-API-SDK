@@ -58,13 +58,13 @@ public class ApiCommandProducerImplTest {
 
         final String expectedFullUri =
                 "https://arsenalpay.ru/init_pay_mk/" +
-                        "?CURRENCY=RUR" +
-                        "&ACCOUNT=123456789" +
-                        "&AMOUNT=1.25" +
+                        "?SIGN=1e304e4920f14ea2ada67e5db2e39b1d" +
                         "&PHONE=9140001111" +
+                        "&FUNCTION=init_pay_mk" +
+                        "&CURRENCY=RUR" +
                         "&ID=2096" +
-                        "&SIGN=1e304e4920f14ea2ada67e5db2e39b1d" +
-                        "&FUNCTION=init_pay_mk";
+                        "&AMOUNT=1.25" +
+                        "&ACCOUNT=123456789";
         assertEquals(expectedFullUri, apiCommand.getFullUri());
     }
 
@@ -87,10 +87,10 @@ public class ApiCommandProducerImplTest {
         assertEquals(expectedParams, apiCommand.getParams());
         final String expectedFullUri =
                 "https://arsenalpay.ru/init_pay_mk/" +
-                        "?ID=2096" +
-                        "&SIGN=388149ef1331aaf88910db84737784f0" +
+                        "?SIGN=388149ef1331aaf88910db84737784f0" +
+                        "&RRN=123456" +
                         "&FUNCTION=init_pay_mk_status" +
-                        "&RRN=123456";
+                        "&ID=2096";
 
         assertEquals(expectedFullUri, apiCommand.getFullUri());
     }

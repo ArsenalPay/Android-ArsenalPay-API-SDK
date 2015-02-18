@@ -7,7 +7,6 @@ package ru.arsenalpay.api.exception;
  * @see InternalApiException
  * @see PaymentException
  * @see ArsenalPayApiRuntimeException
- * @see ConfigurationLoadingException
  * @see HttpClientInitializingException
  *
  * @author adamether
