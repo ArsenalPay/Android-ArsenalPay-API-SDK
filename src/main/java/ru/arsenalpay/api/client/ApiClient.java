@@ -1,7 +1,5 @@
 package ru.arsenalpay.api.client;
 
-//import org.apache.log4j.Appender;
-
 import ru.arsenalpay.api.command.ApiCommand;
 import ru.arsenalpay.api.exception.InternalApiException;
 

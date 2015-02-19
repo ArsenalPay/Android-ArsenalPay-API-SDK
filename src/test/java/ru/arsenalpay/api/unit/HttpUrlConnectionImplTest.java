@@ -14,8 +14,8 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static ru.arsenalpay.api.enums.HttpMethod.GET;
 import static org.mockito.Mockito.when;
+import static ru.arsenalpay.api.enums.HttpMethod.GET;
 import static ru.arsenalpay.api.enums.HttpMethod.POST;
 
 /**

@@ -4,11 +4,8 @@ import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * Created by Ярослав on 18.02.2015.
- */
 public class ArsenalpayUtils {
-    private static Logger log = Logger.getLogger(ArsenalpayUtils.class.getName());
+    private final static Logger log = Logger.getLogger(ArsenalpayUtils.class.getName());
 
     private static String convertStreamToString(InputStream is) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));

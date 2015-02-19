@@ -1,34 +1,38 @@
 package ru.arsenalpay.api.client.impl;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import ru.arsenalpay.api.client.ApiClient;
 import ru.arsenalpay.api.client.ApiResponse;
 import ru.arsenalpay.api.client.ApiResponseImpl;
 import ru.arsenalpay.api.command.ApiCommand;
 import ru.arsenalpay.api.exception.InternalApiException;
 import ru.arsenalpay.api.util.ArsenalpayUtils;
+import ru.arsenalpay.api.util.HttpUrlConfiguration;
 import ru.arsenalpay.api.util.RequestUtils;
 
-/**
- * Created by Ярослав on 04.02.2015.
- */
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+
 public class HttpUrlConnectionImpl implements ApiClient {
 
-    private static Logger log = Logger.getLogger(HttpUrlConnectionImpl.class.getName());
+    private final static Logger log = Logger.getLogger(HttpUrlConnectionImpl.class.getName());
+    private HttpUrlConfiguration configuration;
+
+    public HttpUrlConnectionImpl() {
+
+    }
+
+    public HttpUrlConnectionImpl(HttpUrlConfiguration configuration) {
+        this.configuration = configuration;
+    }
 
     @Override
     public ApiResponse executeCommand(ApiCommand command) throws IOException, InternalApiException {
 
-        log.log(Level.INFO, "ArsenalpayAPI-SDK HttpUrlConnectionImpl JAVA.UTIL.LOGGING");
+        log.info("ArsenalpayAPI-SDK HttpUrlConnectionImpl JAVA.UTIL.LOGGING");
 
         switch (command.getHttpMethod()) {
             case GET: {
@@ -39,14 +43,19 @@ public class HttpUrlConnectionImpl implements ApiClient {
             }
             default: {
                 String message = String.format("Http method is not supported: [%s]", command.getHttpMethod());
-                log.log(Level.INFO, "ArsenalpayAPI-SDK " + message);
+                log.info("ArsenalpayAPI-SDK " + message);
+                throw new InternalApiException(message);
             }
-            break;
         }
-        return ApiResponseImpl.createEmpty();
     }
 
+    /**
+     * Simply execute HTTP GET request
+     * @param command -- api command
+     * @return apiResponse -- apiResponse
+     */
     private ApiResponse executeGet(ApiCommand command) {
+
         HttpURLConnection connection = null;
         URL url = null;
         try {
@@ -58,6 +67,10 @@ public class HttpUrlConnectionImpl implements ApiClient {
         try {
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
+            if (configuration != null) {
+                connection.setReadTimeout(configuration.getReadTimeout());
+                connection.setConnectTimeout(configuration.getConnectionTimeout());
+            }
             return getResponse(connection);
         } catch (Exception e) {
             log.log(Level.SEVERE, "ArsenalpayAPI-SDK HttpUrlConnectionImpl:doGet", e);
@@ -66,8 +79,13 @@ public class HttpUrlConnectionImpl implements ApiClient {
         }
         return ApiResponseImpl.createEmpty();
     }
-
+    /**
+     * Simply execute HTTP POST request
+     * @param command -- api command
+     * @return apiResponse -- apiResponse
+     */
     private ApiResponse executePost(ApiCommand command) {
+
         HttpURLConnection connection = null;
         URL url = null;
         OutputStream output;
@@ -91,6 +109,10 @@ public class HttpUrlConnectionImpl implements ApiClient {
             connection.setDoOutput(true);
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Length", size);
+            if (configuration != null) {
+                connection.setReadTimeout(configuration.getReadTimeout());
+                connection.setConnectTimeout(configuration.getConnectionTimeout());
+            }
 
             output = connection.getOutputStream();
             printWriter = new PrintWriter(output);

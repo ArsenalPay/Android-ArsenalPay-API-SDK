@@ -46,25 +46,25 @@ public class ApiCommandProducerImplTest {
         assertEquals("https://arsenalpay.ru/init_pay_mk/", apiCommand.getBaseUri());
 
         final Map<String, String> expectedParams = new LinkedHashMap<String, String>() {{
-            put("CURRENCY", "RUR");
-            put("ACCOUNT", "123456789");
-            put("AMOUNT", "1.25");
-            put("PHONE", "9140001111");
-            put("ID", "2096");
             put("SIGN", "1e304e4920f14ea2ada67e5db2e39b1d");
+            put("PHONE", "9140001111");
             put("FUNCTION", "init_pay_mk");
+            put("ID", "2096");
+            put("CURRENCY", "RUR");
+            put("AMOUNT", "1.25");
+            put("ACCOUNT", "123456789");
         }};
         assertEquals(expectedParams, apiCommand.getParams());
 
         final String expectedFullUri =
                 "https://arsenalpay.ru/init_pay_mk/" +
-                        "?SIGN=1e304e4920f14ea2ada67e5db2e39b1d" +
-                        "&PHONE=9140001111" +
-                        "&FUNCTION=init_pay_mk" +
-                        "&CURRENCY=RUR" +
-                        "&ID=2096" +
+                        "?CURRENCY=RUR" +
+                        "&ACCOUNT=123456789" +
                         "&AMOUNT=1.25" +
-                        "&ACCOUNT=123456789";
+                        "&PHONE=9140001111" +
+                        "&ID=2096" +
+                        "&SIGN=1e304e4920f14ea2ada67e5db2e39b1d" +
+                        "&FUNCTION=init_pay_mk";
         assertEquals(expectedFullUri, apiCommand.getFullUri());
     }
 
@@ -87,10 +87,10 @@ public class ApiCommandProducerImplTest {
         assertEquals(expectedParams, apiCommand.getParams());
         final String expectedFullUri =
                 "https://arsenalpay.ru/init_pay_mk/" +
-                        "?SIGN=388149ef1331aaf88910db84737784f0" +
-                        "&RRN=123456" +
+                        "?ID=2096" +
+                        "&SIGN=388149ef1331aaf88910db84737784f0" +
                         "&FUNCTION=init_pay_mk_status" +
-                        "&ID=2096";
+                        "&RRN=123456";
 
         assertEquals(expectedFullUri, apiCommand.getFullUri());
     }

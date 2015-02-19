@@ -1,7 +1,7 @@
 package ru.arsenalpay.api.exception;
 
 /**
- * <p>Abstract ArsenalPayApi.<p/>
+ * <p>Abstract ArsenalPayApi.</p>
  *
  * Use in this project code only heirs of this class:
  * @see InternalApiException

@@ -31,7 +31,7 @@ import java.util.logging.Logger;
 @Root(strict = false)
 public final class PaymentResponse extends AbstractResponse {
 
-    private static Logger log = Logger.getLogger(PaymentResponse.class.getName());
+    private final static Logger log = Logger.getLogger(PaymentResponse.class.getName());
 
     /**
      * Original response status of ArsenalMedia Server Api, see more in API protocol
@@ -96,7 +96,7 @@ public final class PaymentResponse extends AbstractResponse {
             put(null,             new InternalApiException("Api server status is null."));
             put("",               new InternalApiException("Api server status is empty."));
             put("ERR_AMOUNT",     new PaymentException("Invalid amount value."));
-            put("ERR_SIGN",        new PaymentException("Invalid sign(hashcode)."));
+            put("ERR_SIGN",       new PaymentException("Invalid sign(hashcode)."));
             put("ERR_PHONE",      new PaymentException("Invalid payerId or value doesn't exist."));
             put("ERR_CURRENCY",   new PaymentException("Invalid currency value or service doesn't support it."));
             put("ERR_DATEFORMAT", new PaymentException("Invalid date format."));
