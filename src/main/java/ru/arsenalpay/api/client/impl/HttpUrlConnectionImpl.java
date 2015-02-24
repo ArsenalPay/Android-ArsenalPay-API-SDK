@@ -22,7 +22,7 @@ public class HttpUrlConnectionImpl implements ApiClient {
     private HttpUrlConfiguration configuration;
 
     public HttpUrlConnectionImpl() {
-
+        configuration = HttpUrlConfiguration.getDefaultConfiguration();
     }
 
     public HttpUrlConnectionImpl(HttpUrlConfiguration configuration) {
