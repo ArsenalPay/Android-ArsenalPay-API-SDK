@@ -6,7 +6,7 @@ import ru.arsenalpay.api.exception.ArsenalPayApiException;
 import ru.arsenalpay.api.exception.InternalApiException;
 import ru.arsenalpay.api.exception.PaymentException;
 import ru.arsenalpay.api.response.PaymentResponse;
-import ru.arsenalpay.api.util.ArsenalpayUtils;
+import ru.arsenalpay.api.util.Utils;
 
 import java.io.IOException;
 
@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 public class PaymentResponseProducingTest {
 
     private PaymentResponse deserializeFromXml(String xml) throws IOException, ArsenalPayApiException {
-        final String apiResponseXml = ArsenalpayUtils.getStringFromFile(xml);
+        final String apiResponseXml = Utils.getStringFromFile(xml);
 
         return PaymentResponse.fromXml(apiResponseXml);
     }

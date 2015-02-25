@@ -5,28 +5,41 @@ import ru.arsenalpay.api.client.ApiResponse;
 import ru.arsenalpay.api.client.ApiResponseImpl;
 import ru.arsenalpay.api.command.ApiCommand;
 import ru.arsenalpay.api.exception.InternalApiException;
-import ru.arsenalpay.api.util.ArsenalpayUtils;
 import ru.arsenalpay.api.util.HttpUrlConfiguration;
 import ru.arsenalpay.api.util.RequestUtils;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+/**
+ * <p>Implementation of ApiClient interface</p>
+ * <p>
+ * <p>You can use default configuration of ApiClient or create your configuration, using HttpUrlConfiguration class</p>
+ *
+ * @author dejibqp
+ */
 public class HttpUrlConnectionImpl implements ApiClient {
 
     private final static Logger log = Logger.getLogger(HttpUrlConnectionImpl.class.getName());
+
+    /**
+     * Connection configuration
+     */
     private final HttpUrlConfiguration configuration;
 
+    /**
+     * Default connection configuration
+     */
     public HttpUrlConnectionImpl() {
         configuration = HttpUrlConfiguration.getDefaultConfiguration();
     }
 
+    /**
+     * Custom configuration of connection
+     */
     public HttpUrlConnectionImpl(HttpUrlConfiguration configuration) {
         this.configuration = configuration;
     }
@@ -51,12 +64,6 @@ public class HttpUrlConnectionImpl implements ApiClient {
         }
     }
 
-    /**
-     * Simply execute HTTP GET request
-     *
-     * @param command -- api command
-     * @return apiResponse -- apiResponse
-     */
     private ApiResponse executeGet(ApiCommand command) throws IOException {
 
         HttpURLConnection connection = getConnection(command);
@@ -69,40 +76,48 @@ public class HttpUrlConnectionImpl implements ApiClient {
         }
     }
 
-    /**
-     * Simply execute HTTP POST request
-     *
-     * @param command -- api command
-     * @return apiResponse -- apiResponse
-     */
     private ApiResponse executePost(ApiCommand command) throws IOException {
 
         HttpURLConnection connection = getConnection(command);
         try {
             return getResponse(connection);
         } finally {
-            if (connection != null)
+            if (connection != null) {
                 connection.disconnect();
+            }
         }
     }
 
-
+    /**
+     * generate ApiResponse from server response
+     *
+     * @param connection
+     * @return apiResponse
+     * @throws IOException
+     */
     private ApiResponse getResponse(HttpURLConnection connection) throws IOException {
 
         InputStream inputStream = new BufferedInputStream(connection.getInputStream());
         int httpStatus = connection.getResponseCode();
 
-        String data = ArsenalpayUtils.readDataFromHTTP(inputStream);
+        String data = readDataFromHTTP(inputStream);
         if (!data.isEmpty()) {
             log.info("ArsenalpayAPI-SDK HttpUrlConnectionImpl Response data: " + data);
             return new ApiResponseImpl(httpStatus, data);
         }
-        log.log(Level.INFO, "ArsenalpayAPI-SDK Response data is empty");
+        log.info("ArsenalpayAPI-SDK Response data is empty");
         return ApiResponseImpl.createEmpty();
-
     }
 
+    /**
+     * Generate,open and return connection with defined params of connection, in case of POST request also fill request body
+     *
+     * @param command
+     * @return connection
+     * @throws IOException
+     */
     private HttpURLConnection getConnection(ApiCommand command) throws IOException {
+
         switch (command.getHttpMethod()) {
             case GET: {
                 URL url = new URL(command.getFullUri());
@@ -148,6 +163,37 @@ public class HttpUrlConnectionImpl implements ApiClient {
             default:
                 return null;
         }
+    }
+
+    /**
+     * Reading xml-formatted server response
+     *
+     * @param inputStream
+     * @return response xml-formatted response as string
+     * @throws IOException
+     */
+    public String readDataFromHTTP(InputStream inputStream) throws IOException {
+
+        StringBuilder response = new StringBuilder();
+        BufferedReader bufferedReader = null;
+        InputStreamReader inputStreamReader = null;
+        try {
+            inputStreamReader = new InputStreamReader(inputStream);
+            bufferedReader = new BufferedReader(inputStreamReader);
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                response.append(line);
+            }
+            if (!response.toString().isEmpty())
+                return response.toString();
+        } finally {
+            try {
+                bufferedReader.close();
+            } catch (NullPointerException e) {
+                log.log(Level.SEVERE, "ArsenalpayAPI-SDK", e);
+            }
+        }
+        return null;
     }
 
 }
