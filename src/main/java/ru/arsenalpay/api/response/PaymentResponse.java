@@ -3,14 +3,12 @@ package ru.arsenalpay.api.response;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.core.Persister;
-import ru.arsenalpay.api.enums.ResponseErrorStatus;
 import ru.arsenalpay.api.exception.ArsenalPayApiException;
 import ru.arsenalpay.api.exception.InternalApiException;
 import ru.arsenalpay.api.exception.PaymentException;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -96,14 +94,25 @@ public final class PaymentResponse extends AbstractResponse {
      */
     private static ArsenalPayApiException translateToException(String status) {
 
-        try {
-            final ArsenalPayApiException exception = ResponseErrorStatus.valueOf(status).getException();
-            return exception;
-        } catch (IllegalArgumentException e) {
+        final Map<String, ArsenalPayApiException> holder = new HashMap<String, ArsenalPayApiException>() {{
+            put(null, new InternalApiException("Api server status is null."));
+            put("", new InternalApiException("Api server status is empty."));
+            put("ERR_AMOUNT", new PaymentException("Invalid amount value."));
+            put("ERR_SIGN", new PaymentException("Invalid sign(hashcode)."));
+            put("ERR_PHONE", new PaymentException("Invalid payerId or value doesn't exist."));
+            put("ERR_CURRENCY", new PaymentException("Invalid currency value or service doesn't support it."));
+            put("ERR_DATEFORMAT", new PaymentException("Invalid date format."));
+            put("ERROR", new InternalApiException("Unknown api server error."));
+            put("ERR_ACCESS", new InternalApiException("Unknown api server error."));
+            put("ERR_NODB", new InternalApiException("Unknown api server error."));
+            put("ERR_FUNCTION", new PaymentException("Invalid function or POST body is empty"));
+        }};
+        final ArsenalPayApiException exception = holder.get(status);
+        if (exception == null) {
             final String comment = String.format("Unrecognized api server status [%s].", status);
-            log.log(Level.SEVERE, "ArsenalpayAPI-SDK PaymentResponse:translateToException");
             return new InternalApiException(comment);
         }
+        return exception;
     }
 
     @Override
