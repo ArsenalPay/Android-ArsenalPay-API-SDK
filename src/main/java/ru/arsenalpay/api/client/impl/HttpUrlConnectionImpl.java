@@ -47,8 +47,6 @@ public class HttpUrlConnectionImpl implements ApiClient {
     @Override
     public ApiResponse executeCommand(ApiCommand command) throws IOException, InternalApiException {
 
-        log.info("ArsenalpayAPI-SDK HttpUrlConnectionImpl JAVA.UTIL.LOGGING");
-
         switch (command.getHttpMethod()) {
             case GET: {
                 return executeGet(command);
@@ -64,7 +62,7 @@ public class HttpUrlConnectionImpl implements ApiClient {
         }
     }
 
-    private ApiResponse executeGet(ApiCommand command) throws IOException {
+    public ApiResponse executeGet(ApiCommand command) throws IOException {
 
         HttpURLConnection connection = getConnection(command);
         try {
@@ -76,7 +74,7 @@ public class HttpUrlConnectionImpl implements ApiClient {
         }
     }
 
-    private ApiResponse executePost(ApiCommand command) throws IOException {
+    public ApiResponse executePost(ApiCommand command) throws IOException {
 
         HttpURLConnection connection = getConnection(command);
         try {
@@ -111,12 +109,13 @@ public class HttpUrlConnectionImpl implements ApiClient {
 
     /**
      * Generate,open and return connection with defined params of connection, in case of POST request also fill request body
+     * I made it public only for testing
      *
      * @param command
      * @return connection
      * @throws IOException
      */
-    private HttpURLConnection getConnection(ApiCommand command) throws IOException {
+    public HttpURLConnection getConnection(ApiCommand command) throws IOException {
 
         switch (command.getHttpMethod()) {
             case GET: {
@@ -135,6 +134,7 @@ public class HttpUrlConnectionImpl implements ApiClient {
                 URL url = new URL(command.getBaseUri());
                 String str = RequestUtils.mapToQueryString(command.getParams());
                 String size = String.valueOf(str.length());
+                log.info("ArsenalpayAPI-SDK POST params: "+str);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
