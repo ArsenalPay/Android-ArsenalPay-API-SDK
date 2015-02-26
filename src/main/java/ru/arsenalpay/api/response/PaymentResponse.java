@@ -97,15 +97,15 @@ public final class PaymentResponse extends AbstractResponse {
         final Map<String, ArsenalPayApiException> holder = new HashMap<String, ArsenalPayApiException>() {{
             put(null, new InternalApiException("Api server status is null."));
             put("", new InternalApiException("Api server status is empty."));
-            put("ERR_AMOUNT", new PaymentException("Invalid amount value."));
-            put("ERR_SIGN", new PaymentException("Invalid sign(hashcode)."));
-            put("ERR_PHONE", new PaymentException("Invalid payerId or value doesn't exist."));
-            put("ERR_CURRENCY", new PaymentException("Invalid currency value or service doesn't support it."));
-            put("ERR_DATEFORMAT", new PaymentException("Invalid date format."));
             put("ERROR", new InternalApiException("Unknown api server error."));
             put("ERR_ACCESS", new InternalApiException("Unknown api server error."));
+            put("ERR_AMOUNT", new PaymentException("Invalid amount value."));
+            put("ERR_CURRENCY", new PaymentException("Invalid currency value or service doesn't support it."));
+            put("ERR_DATEFORMAT", new PaymentException("Invalid date format."));
+            put("ERR_FUNCTION", new InternalApiException("Invalid function or POST body is empty"));
             put("ERR_NODB", new InternalApiException("Unknown api server error."));
-            put("ERR_FUNCTION", new PaymentException("Invalid function or POST body is empty"));
+            put("ERR_PHONE", new PaymentException("Invalid payerId or value doesn't exist."));
+            put("ERR_SIGN", new PaymentException("Invalid sign(hashcode)."));
         }};
         final ArsenalPayApiException exception = holder.get(status);
         if (exception == null) {
