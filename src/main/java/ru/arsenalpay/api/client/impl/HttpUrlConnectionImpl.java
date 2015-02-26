@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  *
  * @author dejibqp
  */
-public class HttpUrlConnectionImpl implements ApiClient {
+public final class HttpUrlConnectionImpl implements ApiClient {
 
     private final static Logger log = Logger.getLogger(HttpUrlConnectionImpl.class.getName());
 
@@ -87,10 +87,10 @@ public class HttpUrlConnectionImpl implements ApiClient {
     }
 
     /**
-     * generate ApiResponse from server response
+     * generate ApiResponse from xml-formatted server response
      *
      * @param connection
-     * @return apiResponse
+     * @return apiResponse class with encapsulated server response body
      * @throws IOException
      */
     private ApiResponse getResponse(HttpURLConnection connection) throws IOException {
@@ -109,10 +109,9 @@ public class HttpUrlConnectionImpl implements ApiClient {
 
     /**
      * Generate,open and return connection with defined params of connection, in case of POST request also fill request body
-     * I made it public only for testing
      *
-     * @param command
-     * @return connection
+     * @param command contains params of request and HTTP method
+     * @return connection returns opened connection
      * @throws IOException
      */
     public HttpURLConnection getConnection(ApiCommand command) throws IOException {
@@ -134,7 +133,7 @@ public class HttpUrlConnectionImpl implements ApiClient {
                 URL url = new URL(command.getBaseUri());
                 String str = RequestUtils.mapToQueryString(command.getParams());
                 String size = String.valueOf(str.length());
-                log.info("ArsenalpayAPI-SDK POST params: "+str);
+                log.info("ArsenalpayAPI-SDK POST params: " + str);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);

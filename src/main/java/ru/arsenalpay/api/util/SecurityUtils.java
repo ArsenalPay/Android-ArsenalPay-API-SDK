@@ -37,6 +37,7 @@ public class SecurityUtils {
 
     /**
      * Create signature for request values
+     *
      * @param secret secret word
      * @param values values in strict order as described in PS API
      * @return signature

@@ -2,6 +2,9 @@ package ru.arsenalpay.api.util;
 
 import java.io.*;
 
+/**
+ * <p>This class using only in test classes</p>
+ */
 public class Utils {
 
     private static String convertStreamToString(InputStream is) throws IOException {
