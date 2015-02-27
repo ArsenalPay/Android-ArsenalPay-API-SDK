@@ -89,7 +89,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
                 PaymentRequest paymentRequest = getPaymentRequest();
 
-                if(paymentRequest!=null) {
+                if (paymentRequest != null) {
                     sendRequestPayment = new SendRequestPayment();
                     sendRequestPayment.execute(paymentRequest);
                 }
@@ -99,6 +99,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 execute.setEnabled(false);
                 checkStatus.setEnabled(false);
                 progressBar.setVisibility(View.VISIBLE);
+
                 if (transactionID != null) {
                     checkStatusPayment = new CheckStatusPayment();
                     checkStatusPayment.execute(new PaymentStatusRequest(transactionID));
@@ -193,7 +194,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         }
     }
 
-    private PaymentRequest getPaymentRequest(){
+    private PaymentRequest getPaymentRequest() {
         PaymentRequest paymentRequest;
 
         if (testMode) {
