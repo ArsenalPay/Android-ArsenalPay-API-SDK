@@ -5,6 +5,11 @@ repositories {
     jcenter()
     mavenCentral()
 }
+task fatJar(type: Jar) {
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
 dependencies {
     compile('org.simpleframework:simple-xml:2.7.1') {
         exclude module: 'stax'
