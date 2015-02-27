@@ -23,7 +23,8 @@ Dependencies
 Install
 ----
 
-Clone repo and import module in your Gradle-based project to start using ArsenalPay-API
+Clone repo and import module in your Gradle-based project to start using ArsenalPay-API.  
+Or you can open terminal in sdk folder and enter: "gradle clean","gradle fatjar" for receive JAR with all dependencies.
 
 Logs
 ----
@@ -88,4 +89,5 @@ See more details in JavaDoc.
 
 **Android example**
 ----
-[Bitbucket](https://bitbucket.org/dejibqp/arsenalpaytest)
+Android example is located in a folder exampleApp.  
+It's a simple demonstration how this SDK can be used in Android application. 
