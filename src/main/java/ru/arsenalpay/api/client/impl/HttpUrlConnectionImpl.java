@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  *
  * @author dejibqp
  */
-public final class HttpUrlConnectionImpl implements ApiClient {
+public class HttpUrlConnectionImpl implements ApiClient {
 
     private final static Logger log = Logger.getLogger(HttpUrlConnectionImpl.class.getName());
 
