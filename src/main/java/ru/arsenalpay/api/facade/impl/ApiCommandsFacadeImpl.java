@@ -50,8 +50,8 @@ public class ApiCommandsFacadeImpl implements ApiCommandsFacade {
     private final MerchantCredentials credentials;
 
     /**
-     * This is default constructor with ApacheApiClientImpl as ApiClient implementation.
-     * HttpClient is configured for work in concurrency environment.
+     * This is default constructor with HttpUrlConnectionImpl as ApiClient implementation.
+     * Connection is configured for work in concurrency environment.
      */
     public ApiCommandsFacadeImpl() {
         this.apiClient = new HttpUrlConnectionImpl();
@@ -70,7 +70,7 @@ public class ApiCommandsFacadeImpl implements ApiCommandsFacade {
     }
 
     /**
-     * HttpClient is configured for work in concurrency environment.
+     * Connection is configured for work in concurrency environment.
      * MerchantCredentials are id and secret given to you at registration.
      * Take a note: merchantCredentials witch were set in conf/sdk.properties will be ignored!
      */
@@ -82,8 +82,8 @@ public class ApiCommandsFacadeImpl implements ApiCommandsFacade {
 
     /**
      * This constructor is for your absolute freedom.
-     * This is constructor with ApacheApiClientImpl as ApiClient implementation and merchantCredentials.
-     * HttpClient is configured for work in concurrency environment.
+     * This is constructor with HttpUrlConnectionImpl as ApiClient implementation and merchantCredentials.
+     * Connection is configured for work in concurrency environment.
      * MerchantCredentials are id and secret given to you at registration.
      * Take a note: merchantCredentials witch were set in conf/sdk.properties will be ignored!
      */
