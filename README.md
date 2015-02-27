@@ -40,9 +40,9 @@ Request params
 ----
 1) **ID** - Merchant ID which can be obtain from the payment service provider ArsenalPay  
 *Test ID = "9987"*  
-2) **Secret** - Merchant Passwordwhich can be obtain from the payment service provider ArsenalPay  
+2) **Secret** - Merchant Password which can be obtain from the payment service provider ArsenalPay  
 *Test Secret = "1234567890"*  
-3) **PayerID** - Phone number of the client (формат: 9xx xxx xxxx)  
+3) **PayerID** - Phone number of the client (9\*\* \*\*\* \*\*\*)  
 4) **RecipientID** - Account number of the seller  
 5) **Amount** - 10-15000 RUR  
 6) **Currency** - Code of currency (ISO 4217)  
