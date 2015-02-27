@@ -83,46 +83,16 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.execute: {
 
-                PaymentRequest paymentRequest;
-
                 progressBar.setVisibility(View.VISIBLE);
                 execute.setEnabled(false);
                 checkStatus.setEnabled(false);
 
-                if (testMode) {
-                    paymentRequest = new PaymentRequest.MobileBuilder()
-                            .payerId(9140001111L)
-                            .recipientId(147852369L)
-                            .amount(10D)
-                            .currency("RUR")
-                            .comment("Java-SDK-Test")
-                            .build();
-                } else {
-                    String payerID = this.payerID.getText().toString();
-                    String recipientID = this.recipientID.getText().toString();
-                    String amount = this.amount.getText().toString();
+                PaymentRequest paymentRequest = getPaymentRequest();
 
-
-                    if (isBlank(payerID) || isBlank(recipientID) || isBlank(amount)) {
-                        status.setText("Some params are empty");
-                        execute.setEnabled(true);
-                        if (transactionID != null) {
-                            checkStatus.setEnabled(true);
-                        }
-                        progressBar.setVisibility(View.INVISIBLE);
-                        break;
-                    }
-
-                    paymentRequest = new PaymentRequest.MobileBuilder()
-                            .payerId(Long.valueOf(payerID))
-                            .recipientId(Long.valueOf(recipientID))
-                            .amount(Double.valueOf(amount))
-                            .currency("RUR")
-                            .build();
+                if(paymentRequest!=null) {
+                    sendRequestPayment = new SendRequestPayment();
+                    sendRequestPayment.execute(paymentRequest);
                 }
-
-                sendRequestPayment = new SendRequestPayment();
-                sendRequestPayment.execute(paymentRequest);
             }
             break;
             case R.id.check_status: {
@@ -221,6 +191,43 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             checkStatus.setEnabled(true);
             progressBar.setVisibility(View.INVISIBLE);
         }
+    }
+
+    private PaymentRequest getPaymentRequest(){
+        PaymentRequest paymentRequest;
+
+        if (testMode) {
+            paymentRequest = new PaymentRequest.MobileBuilder()
+                    .payerId(9140001111L)
+                    .recipientId(147852369L)
+                    .amount(10D)
+                    .currency("RUR")
+                    .comment("Java-SDK-Test")
+                    .build();
+        } else {
+            String payerID = this.payerID.getText().toString();
+            String recipientID = this.recipientID.getText().toString();
+            String amount = this.amount.getText().toString();
+
+
+            if (isBlank(payerID) || isBlank(recipientID) || isBlank(amount)) {
+                status.setText("Some params are empty");
+                execute.setEnabled(true);
+                if (transactionID != null) {
+                    checkStatus.setEnabled(true);
+                }
+                progressBar.setVisibility(View.INVISIBLE);
+                return null;
+            }
+
+            paymentRequest = new PaymentRequest.MobileBuilder()
+                    .payerId(Long.valueOf(payerID))
+                    .recipientId(Long.valueOf(recipientID))
+                    .amount(Double.valueOf(amount))
+                    .currency("RUR")
+                    .build();
+        }
+        return paymentRequest;
     }
 
     @Override
