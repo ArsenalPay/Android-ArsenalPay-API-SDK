@@ -33,7 +33,7 @@ To view the logs of SDK, edit filter for log message: "ArsenalPayAPI-SDK"
 Merchant Credentials
 ----
 First of all, if you wish to start using ArsenalPay-SDK for real, you should get real MerchantCredentials. For this, go to **[ArsenalPay support page](https://arsenalpay.ru/index.html)** and send your request.
-After some time, you'll get e-mail message from out manager, which will help you.
+After some time, you'll get e-mail message from our manager, which will help you.
 If you want to test our API, you can use test MerchantCredentials.
 
 Request params
